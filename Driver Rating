@@ -10,3 +10,21 @@ def get_sec(time_str):
     h, m, s = time_str.strftime('%H'),time_str.strftime('%M'),time_str.strftime('%S'),
 
     return int(h) * 3600 + int(m) * 60 + int(s)
+
+#importing dataset
+dataset = pd.read_excel('triproute.xls')
+df = pd.DataFrame(dataset)
+
+#replace na with 0
+df.fillna(0, inplace=True)
+#normalizing with time
+time = df["total_time"].apply(get_sec)
+#print(time)
+
+
+#crash
+Crash_Hr = ((df['Crash']/time))*3600
+
+
+#Alarms per hour
+Alarms_Hr = ((df['Alarms']/time))*3600
